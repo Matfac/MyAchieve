@@ -1,0 +1,64 @@
+<div id = "regmenu" class="panel hide hidefull">
+    <div class="title">Регистрация</div>
+    <div class="punkt">Кто вы?</div>
+    <a id="choosestudent" class="choose" onclick="regChoose('student')">Обучающийся</a>
+    <a id="chooseorganizer" class="choose" onclick="regChoose('organizer')">Организатор</a>
+    <a id="chooseemployer" class="choose" onclick="regChoose('employer')">Работодатель</a></br>
+    <div id="student" class="typeuser hide hidefull">
+        <form onsubmit="regClick('student'); return false;">
+            <div class="punkt">Аккаунт обучающегося</div>
+            <input type="email" name="Email" placeholder="Электронная почта" required>
+            <input type="text" name="Login" placeholder="Имя пользователя" required>
+            <input type="password" name="Password" placeholder="Пароль" required></br>
+            <div class="punkt">Личная информация</div>
+            <input type="text" name="Surname" placeholder="Фамилия" required>
+            <input type="text" name="Name" placeholder="Имя" required>
+            <input type="text" name="Patronymic" placeholder="Отчество (необязательно)">
+            <div class="podpunkt">День рождения</div>
+            <input type="date" min="1925-01-01" name="Birthday" placeholder="Формат: дд.мм.гггг" style="width:605px" required></br>
+            <div class="podpunkt">Адрес</div>
+            <input type="text" name="City" placeholder="Город" required>
+            <input type="text" name="Street" placeholder="Улица" required>
+            <input type="text" name="Home" placeholder="Дом" required>
+            </br>
+            <input type="submit" class="submit" value="Регистрация">
+        </form>
+    </div>
+    <div id="organizer" class="typeuser hide hidefull">
+        <form onsubmit="regClick('organizer'); return false;">
+            <div class="punkt">Аккаунт организатора</div>
+            <input type="email" name="Email" placeholder="Электронная почта" required>
+            <input type="text" name="Login" placeholder="Имя пользователя" required>
+            <input type="password" name="Password" placeholder="Пароль" required></br>
+            <div class="punkt">Дополнительная информация</div>
+            <input type="text" name="Title" placeholder="Название организации" required style="width:605px">
+            <div class="podpunkt">Телефоны (через запятую)</div>
+            <input type="text" name="Phones" placeholder="37-93-55,233562,8(960)7183215 и т.д" required style="width:605px"></br>
+            <div class="podpunkt">Адрес</div>
+            <input type="text" name="City" placeholder="Город" required>
+            <input type="text" name="Street" placeholder="Улица" required>
+            <input type="text" name="Home" placeholder="Дом" required>
+            </br>
+            <input type="submit" class="submit" value="Регистрация">
+        </form>
+    </div>
+    <div id="employer" class="typeuser hide hidefull">
+        <form onsubmit="regClick('employer'); return false;">
+            <div class="punkt">Аккаунт работодателя</div>
+            <input type="email" name="Email" placeholder="Электронная почта" required>
+            <input type="text" name="Login" placeholder="Имя пользователя" required>
+            <input type="password" name="Password" placeholder="Пароль" required></br>
+            <div class="punkt">Дополнительная информация</div>
+            <input type="text" name="Title" placeholder="Название организации" required style="width:295px">
+            <input type="text" name="Chief" placeholder="ФИО Руководителя" required style="width:295px">
+            <div class="podpunkt">Телефоны (через запятую)</div>
+            <input type="text" name="Phones" placeholder="37-93-55,233562,8(960)7183215 и т.д." required style="width:605px"></br>
+            <div class="podpunkt">Адрес</div>
+            <input type="text" name="City" placeholder="Город" required>
+            <input type="text" name="Street" placeholder="Улица" required>
+            <input type="text" name="Home" placeholder="Дом" required>
+            </br>
+            <input type="submit" class="submit" value="Регистрация">
+        </form>
+    </div>
+</div>

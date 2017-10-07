@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <title>MyAchieve - Все достижения в одном месте!</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+	</style>
+</head>
+
+<body>
+    <script src="lib/p5.min.js"></script>
+    <script src="lib/p5.dom.min.js"></script>
+    <script src="src/scripts.js"></script>
+    <div class="topbar" hidden></div>
+    <div class="loginmenu" hidden></div>
+    <div class="regmenu" hidden></div>
+    <div class="message" hidden></div>
+    <div class="evmenu" hidden></div>
+    <div id="interface"></div>
+    <form id="filestream" enctype="multipart/form-data" method="post" hidden>
+         <input  class="filestream" type=file size=30 name=FileStream onchange="uploadLogoImg()">
+     </form>
+</body>
+
+</html>

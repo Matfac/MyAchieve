@@ -1,0 +1,35 @@
+.panel {
+    position: fixed;
+    left: 0px;
+    top: 18px;
+    width: 100%;
+    height: 21px;
+    background-color: white;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    transition: 0.3s;
+    padding: 5px;
+    text-align: center;
+    color: black;
+    z-index: 998;
+    opacity: 0.95;
+}
+
+.success {
+    background-color: #2E8FE5;
+    color: white;
+}
+
+.error {
+    background-color: #E52E2E;
+    color: white;
+}
+
+.show {
+    transform: translateY(31px);
+}
+
+.hide {
+    opacity: 0;
+}

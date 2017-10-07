@@ -1,0 +1,15 @@
+<div class="panel hidefull" id="evmenu">
+    <div class="title" id="evmenu_titlebar">Создать событие</div>
+    <form onsubmit="createEventOrg(); return false;">
+        <input type="text" class="evmenu_punkt" placeholder="Название события" id="evmenu_title" required>
+        <select id="evmenu_level" required>
+            <option disabled>Выберите уровень:</option>
+            <option value="1">Городской</option>
+             <option value="2">Региональный</option>
+            <option value="3">Всероссийский</option>
+            <option value="4">Международный</option>
+        </select>
+        <input type="number" class="evmenu_punkt" placeholder="Год проведения" id="evmenu_year" required>
+        <input type="submit" class="btn hidefull" id = "evmenu_submit" value="Создать">
+    </form>
+</div>
