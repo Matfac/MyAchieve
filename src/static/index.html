@@ -8,23 +8,343 @@
     <meta http-equiv="Cache-Control" content="no-cache">
     <title>MyAchieve - Все достижения в одном месте!</title>
     <link rel="stylesheet" href="index.css">
-    <style>
-	</style>
 </head>
 
 <body>
-    <script src="lib/p5.min.js"></script>
-    <script src="lib/p5.dom.min.js"></script>
+    <div class="message" style="top:0px">
+        <b></b>
+    </div>
+    <div class="topbar">
+        <div class="topbar-title"><span class="burger" onclick="bl1.focus()">&#9776</span>MyAchieve</div>
+        <input id="logreg" class="btn" type="button" value="Регистрация" onclick="toggleW('#regbar','show')" />
+        <input id="logenter" class="btn" type="button" value="Войти" onclick="toggleW('#loginbar','show')" />
+        <input id="logexit" class="btn hide" type="button" value="Выйти" onclick="exitClick()" />
+    </div>
+    <div id="regbar" class="regbar">
+        <h2 style="color:#333333">Регистрация</h2>
+        <div class="tabs">
+            <input id="tab1" type="radio" name="tabs" checked>
+            <label for="tab1" title="Организатор">Организатор</label>
+
+            <input id="tab2" type="radio" name="tabs">
+            <label for="tab2" title="Работодатель">Работодатель</label>
+
+            <section id="content-tab1">
+                <p>
+                    <form id="organizer" onsubmit="regClick('organizer'); return false;">
+                        <div class="p"><b>Аккаунт учреждения</b></div>
+                        <div class="s inpblock">
+                            <input type="email" name="Email" placeholder="Электронная почта" required>
+                            <input type="text" name="Login" placeholder="Имя пользователя" required>
+                            <input type="password" name="Password" placeholder="Пароль" required>
+                        </div>
+                        <div class="p"><b>Дополнительная информация</b></div>
+                        <div class="s inpblock">
+                            <input type="text" name="Title" placeholder="Полное название учреждения" required style="width:605px">
+                        </div>
+                        <div class="p">Телефоны (через запятую)</div>
+                        <div class="s inpblock">
+                            <input type="text" name="Phones" placeholder="37-93-55,233562,8(960)7183215 и т.д" style="width:605px">
+                        </div>
+                        <div class="p">Адрес</div>
+                        <div class="s">
+                            <div class="inpblock">
+                                <input type="text" name="City" placeholder="Город" required>
+                            </div>
+                            <div class="inpblock">
+                                <input type="text" name="Street" placeholder="Улица" required>
+                                <input type="text" name="Home" placeholder="Дом" required>
+                                <input type="text" name="ZipCode" placeholder="Индекс" required>
+                            </div>
+                        </div>
+                        <input type="submit" class="btn" value="Регистрация">
+                    </form>
+                </p>
+            </section>
+            <section id="content-tab2">
+                <p>
+                    <form id="employer" onsubmit="regClick('employer'); return false;">
+                        <div class="p"><b>Аккаунт работодателя</b></div>
+                        <div class="s inpblock">
+                            <input type="email" name="Email" placeholder="Электронная почта" required>
+                            <input type="text" name="Login" placeholder="Имя пользователя" required>
+                            <input type="password" name="Password" placeholder="Пароль" required>
+                        </div>
+                        <div class="p"><b>Дополнительная информация</b></div>
+                        <div class="s inpblock">
+                            <input type="text" name="Title" placeholder="Название организации" required>
+                            <input type="text" name="Chief" placeholder="ФИО Руководителя" required>
+                        </div>
+                        <div class="p">Контактные телефоны (факс)</div>
+                        <div class="s inpblock">
+                            <input type="text" name="Phones" placeholder="37-93-55,233562,8(960)7183215 и т.д." required>
+                        </div>
+                        <div class="p">Адрес</div>
+                        <div class="s">
+                            <div class="inpblock">
+                                <input type="text" name="City" placeholder="Город" required>
+                            </div>
+                            <div class="inpblock">
+                                <input type="text" name="Street" placeholder="Улица" required>
+                                <input type="text" name="Home" placeholder="Дом" required>
+                                <input type="text" name="ZipCode" placeholder="Индекс" required>
+                            </div>
+                        </div>
+                        <div class="p">Координатор</div>
+                        <div class="s inpblock">
+                            <input type="text" name="Coord" placeholder="ФИО Координатора" required>
+                            <input type="text" name="CoordPhones" placeholder="Контактные телефоны" required>
+                            <input type="text" name="CoordPost" placeholder="Должность" required>
+                        </div>
+                        <input type="submit" class="btn" value="Регистрация">
+                    </form>
+                </p>
+            </section>
+        </div>
+    </div>
+    <div id="loginbar" class="loginbar">
+        <form onsubmit="logClick(); return false;">
+            <div class="inpblock">
+                <input type="text" placeholder="Имя пользователя" id="menu_login" required>
+            </div>
+            <div class="s inpblock">
+                <input type="password" placeholder="Пароль" id="menu_password" required>
+            </div>
+            <div class="inpblock">
+                <input type="submit" class="btn" value="Войти">
+            </div>
+        </form>
+    </div>
+    <div style="height: 55px"></div>
+    <div id="bl1" class="leftbar infoblock" style="display: none;" tabindex="1">
+    </div>
+    <div id="bl2" class="mainblock">
+        <div id="studeditor" class="infoblock hide" style="display: none">
+            <div class="titleblock">Создание / редактирование обучающегося</div>
+            <div class="cont">
+                <input type="button" class="btn submit" onclick="clearStudent()" value="Новый обучающийся">
+                <div id="student">
+                    <form onsubmit="regClick('student'); return false;">
+                        <input type="hidden" id="StLogin" name="Login" value="None">
+                        <div class="p"><b>ФИО</b></div>
+                        <div class="inpblock">
+                            <input type="text" id="Surname" name="Surname" placeholder="Фамилия" required>
+                            <input type="text" id="Name" name="Name" placeholder="Имя" required>
+                            <input type="text" id="Patronymic" name="Patronymic" placeholder="Отчество (необязательно)">
+                        </div>
+                        <div class="p">День рождения</div>
+                        <div class="inpblock">
+                            <input type="text" id="Birthday" name="Birthday" placeholder="Формат: дд.мм.гггг" required>
+                        </div>
+                        <div class="p">Сфера деятельности</div>
+                        <div class="inpblock">
+                            <select id="Foa" name="Foa" required>
+                                        <option disabled>Выберите:</option>
+                                        <option value="1">Спорт</option>
+                                         <option value="2">Образование и наука</option>
+                                        <option value="3">Управление и обществ. деятельность</option>
+                                        <option value="4">Культура и искусство</option>
+                                        <option value="5">Техника</option>
+                                        <option value="6">Предпринимательство</option>
+                                    </select>
+                        </div>
+                        <div class="p">Адрес</div>
+                        <div class="inpblock">
+                            <input type="text" id="SCity" name="City" placeholder="Город" required>
+                        </div>
+                        <div class="inpblock">
+                            <input type="text" id="SStreet" name="Street" placeholder="Улица" required>
+                            <input type="text" id="SHome" name="Home" placeholder="Дом" required>
+                            <input type="text" id="SZipCode" name="ZipCode" placeholder="Индекс" required>
+                        </div>
+                        <input type="submit" class="btn submit" value="Сохранить">
+                    </form>
+                </div>
+                <div id="achieve">
+                    <form onsubmit="addAch(); return false;">
+                        <div class="p"><b>Достижения</b></div>
+                        <div class="inpblock">
+                            <input type="text" name="Ach-Title" placeholder="Название конкурса/олимпиады/форума" required>
+                        </div>
+                        <div class="inpblock">
+                            <select id="Ach-Level" name="Ach-Level" required>
+                                        <option disabled>Уровень:</option>
+                                        <option value="1">Образовательная организация</option>
+                                         <option value="2">Муниципальный</option>
+                                        <option value="3">Региональный</option>
+                                        <option value="4">Всероссийский</option>
+                                        <option value="5">Международный</option>
+                                    </select>
+                        </div>
+                        <div class="inpblock">
+                            <input type="text" name="Ach-City" placeholder="Место проведения" required>
+                            <input type="text" name="Ach-Year" placeholder="Год проведения" required>
+                        </div>
+                        <div class="inpblock">
+                            <select id="Ach-EventResult" name="Ach-EventResult" required>
+                                        <option disabled>Выберите:</option>
+                                        <option value="1">Участник</option>
+                                        <option value="2">Победитель</option>
+                                        <option value="3">Призёр</option>
+                                        <option value="4">Организатор</option>
+                                        <option value="5">Лауреат</option>
+                                    </select>
+                        </div>
+                        <input type="submit" class="btn submit" value="Добавить">
+                        <div class="p">Подтверждающие документы (загрузить при наличии)</div>
+                        <div class="inpblock">
+                            <input type="text" id="Ach-VerifyPhoto" name="Ach-VerifyPhoto" placeholder="Фото">
+                        </div>
+                        <div class="inpblock">
+                            <input type="text" name="Ach-VerifyVideo" placeholder="Cсылка на видео">
+                        </div>
+                        <div class="inpblock">
+                            <input type="text" id="Ach-VerifyImg" name="Ach-VerifyImg" placeholder="Документ">
+                        </div>
+                    </form>
+                    <form id="VPhoto" enctype="multipart/form-data" method="post">
+                        <div class="inpblock">
+                            <input class="VPhoto" style="margin:5px 0px" type=file size=30 name="FileStream">
+                        </div>
+                        <div class="inpblock">
+                            <input type="button" class="btn" value="Загрузить фото" onclick="uploadImg('VPhoto','Ach-VerifyPhoto')">
+                        </div>
+                        <div class="inpblock">
+                            <input type="button" class="btn" value="Загрузить документ" onclick="uploadImg('VPhoto','Ach-VerifyImg')">
+                        </div>
+                    </form>
+                </div>
+                </br>
+                <div id="experience">
+                    <form onsubmit="addExp(); return false;">
+                        <div class="p"><b>Опыт практической деятельности</b></div>
+                        <div class="inpblock">
+                            <select id="Exp-GetExp" name="Exp-GetExp" required>
+                                            <option disabled>Форма получения опыта:</option>
+                                            <option value="1">Стажировка</option>
+                                            <option value="2">Практика</option>
+                                            <option value="3">Профессиональная проба</option>
+                                            <option value="4">Другое</option>
+                                    </select>
+                        </div>
+                        <div class="inpblock">
+                            <input type="text" name="Exp-Name" placeholder="Название" required>
+                        </div>
+                        <div class="inpblock">
+                            <input type="text" name="Exp-Organizer" placeholder="Место прохождения практики (название организации)" required>
+                        </div>
+                        <div class="inpblock">
+                            <input type="text" name="Exp-Country" placeholder="Страна" required>
+                            <input type="text" name="Exp-City" placeholder="Город" required>
+                        </div>
+                        <div class="inpblock">
+                            <textarea id="Exp-Exp" name="Exp-Exp" placeholder="Опыт деятельности (краткое описание видов деятельности в ходе практики / стажировки / профессиональной пробы; не более 100 слов)"></textarea>
+                        </div>
+                        <input type="submit" class="btn submit" value="Добавить">
+                        <div class="p">Подтверждающие документы (загрузить при наличии)</div>
+                        <div class="inpblock">
+                            <input type="text" id="Exp-VerifyPhoto" name="Ach-VerifyPhoto" placeholder="Фото">
+                        </div>
+                        <div class="inpblock">
+                            <input type="text" name="Exp-VerifyVideo" placeholder="Cсылка на видео">
+                        </div>
+                        <div class="inpblock">
+                            <input type="text" id="Exp-VerifyImg" name="Ach-VerifyImg" placeholder="Документ">
+                        </div>
+                        <div class="inpblock">
+                            <input type="text" name="Exp-VerifyUrl" placeholder="Ссылка на сайт, электронный ресурс">
+                        </div>
+                    </form>
+                    <form id="VPhoto2" enctype="multipart/form-data" method="post">
+                        <div class="inpblock">
+                            <input class="VPhoto2" style="margin:5px 0px" type=file size=30 name="FileStream">
+                        </div>
+                        <div class="inpblock">
+                            <input type="button" class="btn" value="Загрузить фото" onclick="uploadImg('VPhoto2','Exp-VerifyPhoto')">
+                        </div>
+                        <div class="inpblock">
+                            <input type="button" class="btn" value="Загрузить документ" onclick="uploadImg('VPhoto2','Exp-VerifyImg')">
+                        </div>
+                    </form>
+                </div>
+                </br>
+                <div id="othereduc">
+                    <form onsubmit="addOEdu(); return false;">
+                        <div class="p"><b>Дополнительное образование</b></div>
+                        <div class="inpblock">
+                            <input type="text" name="OEdu-Organizer" placeholder="Организация, которая выдала документ" required>
+                        </div>
+                        <div class="inpblock">
+                            <input type="text" name="OEdu-City" placeholder="Город (место нахождения организации)" required>
+                        </div>
+                        <div class="inpblock">
+                            <input type="text" name="OEdu-Qualification" placeholder="Компетенция/квалификация, которая получена по результатам обучения"
+                                required style="width:572px"><br/>
+                        </div>
+                        <div class="inpblock">
+                            <select id="OEdu-TypeDoc" name="OEdu-TypeDoc" required>
+                                            <option disabled>Вид документа:</option>
+                                            <option value="1">Сертификат</option>
+                                            <option value="2">Удостоверение</option>
+                                            <option value="3">Диплом</option>
+                                            <option value="4">Свидетельство</option>
+                                            <option value="5">Другое</option>
+                                    </select>
+                        </div>
+                        <div class="inpblock">
+                            <input type="text" name="OEdu-Hours" placeholder="Количество часов" required>
+                            <input type="text" name="OEdu-DateDoc" placeholder="Дата получения документа. Формат: дд.мм.гггг" required>
+                        </div>
+                        <input type="submit" class="btn submit" value="Добавить">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="studshow">
+        </div>
+    </div>
+    <div id="bl3" class="mainblock">
+        <div id="searchst" style="display: none">
+            <div class="infoblock">
+                <div class="titleblock">Поиск по критериям</div>
+                <form onsubmit="searchStudents(); return false;">
+                    <div class="cont">
+                        <div class="title">Сфера деятельности</div>
+                    </div>
+                    <div class="cont inpblock">
+                        <select id="SearchFoa" name="SearchFoa" required>
+                        <option disabled>Выберите:</option>
+                        <option value="0">Все сферы</option>
+                        <option value="1">Спорт</option>
+                        <option value="2">Образование и наука</option>
+                        <option value="3">Управление и обществ. деятельность</option>
+                        <option value="4">Культура и искусство</option>
+                        <option value="5">Техника</option>
+                        <option value="6">Предпринимательство</option>
+                    </select>
+                    </div>
+                    <div class="cont">
+                        <div class="title">Минимальный возраст</div>
+                    </div>
+                    <div class="cont inpblock">
+                        <input id="SearchMinAge" name="SearchMinAge" type="text" placeholder="От 1 года" required>
+                    </div>
+                    <div class="cont">
+                        <div class="title">Максимальный возраст</div>
+                    </div>
+                    <div class="cont inpblock">
+                        <input id="SearchMaxAge" name="SearchMaxAge" type="text" placeholder="До 99 лет" required>
+                    </div>
+                    <div class="cont inpblock">
+                        <input type="submit" class="btn" value="Поиск">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="userbl3"></div>
+        <div id="infostud"></div>
+    </div>
     <script src="src/scripts.js"></script>
-    <div class="topbar" hidden></div>
-    <div class="loginmenu" hidden></div>
-    <div class="regmenu" hidden></div>
-    <div class="message" hidden></div>
-    <div class="evmenu" hidden></div>
-    <div id="interface"></div>
-    <form id="filestream" enctype="multipart/form-data" method="post" hidden>
-         <input  class="filestream" type=file size=30 name=FileStream onchange="uploadLogoImg()">
-     </form>
 </body>
 
 </html>

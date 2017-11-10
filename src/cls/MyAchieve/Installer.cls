@@ -7,7 +7,7 @@ ClassMethod CreateProjection(cls As %String, ByRef params) As %Status
 {
     write !, "Registering web application /"
     set st = ##class(WebAppManager).Register("/", {"AutheEnabled": ($$$AutheUnauthenticated), "IsNameSpaceDefault": ($$$NO), 
-    "DispatchClass": "MyAchieve.Manage.Root"})
+    "DispatchClass": "MyAchieve.Manage.Root", "MatchRoles": ":%All"})
     if $$$ISERR(st) { return st }
     write !, "Registering web application /auth"
     set l = ##class(%ListOfDataTypes).%New()

@@ -4,13 +4,13 @@ Class MyAchieve.Manage.Root Extends %CSP.REST
 XData UrlMap
 {
 <Routes>
-	<Route Url="/" Method="GET" Call="root"/>
+	<Route Url="/" Method="GET" Call="Root"/>
 	<Route Url="/reg" Method="POST" Call="CreateNewUser"/>
 	<Route Url="/img/:imgid" Method="GET" Call="LoadImage"/>
 </Routes>
 }
 
-ClassMethod root() As %Status
+ClassMethod Root() As %Status
 {
     write "<script>location = '/gui/index.html';</script>"
     return $$$OK
@@ -21,29 +21,21 @@ ClassMethod CreateNewUser() As %Status
 	set obj = {}.%FromJSON(%request.Content)
 	set objstr = $zcvt(obj.%ToJSON(),"I","UTF8")
 	set obj = {}.%FromJSON(objstr)
-	if (obj.Type = "student") {
-		set fullname = "Обучающийся"
-	}
 	if (obj.Type = "organizer") {
 		set fullname = "Организатор"
 	}
 	if (obj.Type = "employer") {
 		set fullname = "Работодатель"
 	}
+	if (obj.Type = "organizer") set st = ##class(MyAchieve.Clients.Organizer).SetInfo(obj, "sa_"_obj.Login)
+	if (obj.Type = "employer") set st = ##class(MyAchieve.Clients.Employer).SetInfo(obj, "sa_"_obj.Login)
+	if $$$ISERR(st) return st
 	set ns = $namespace
 	zn "%SYS"
-	set sc = ..CreateUserInternal("sa_"_obj.Login,, obj.Password, fullname, ns)
+	if (obj.Type '= "student") { set sc = ..CreateUserInternal("sa_"_obj.Login,, obj.Password, fullname, ns) }
 	if $$$ISERR(sc) return sc
 	zn ns
-	if (obj.Type = "student") set st = ##class(MyAchieve.Clients.Student).SetInfo(obj, "sa_"_obj.Login)
-	if (obj.Type = "organizer") set st = ##class(MyAchieve.Clients.Organizer).SetInfo(obj, "sa_"_obj.Login)
-	if (obj.Type = "employer") set st = ##class(MyAchieve.Employers.Employer).SetInfo(obj, "sa_"_obj.Login)
-	if $$$ISERR(st) {
-		zn "%SYS"
-		do ##class(Security.Users).Delete("sa_"_obj.Login)
-		zn ns
-		return st
-	}
+	
 	return $$$OK
 }
 
